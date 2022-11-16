@@ -15,4 +15,11 @@ export class AccountServices implements IAccountServices {
   getAccountService: GetAccountService
   updateAccountService: UpdateAccountService
   deleteAccountService: DeleteAccountService
+
+  constructor () {
+    this.createAccountService = new CreateAccountService()
+    this.getAccountService = new GetAccountService()
+    this.updateAccountService = new UpdateAccountService()
+    this.deleteAccountService = new DeleteAccountService()
+  }
 }
