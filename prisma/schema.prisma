@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,38 +8,29 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  username  String   @unique
+  id        String  @id @default(uuid())
+  username  String  @unique
   password  String
-  accountId String   @unique @map("account_id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @default(now()) @map("updated_at")
-
-  account Account @relation(fields: [accountId], references: [id])
-
-  @@map("users")
+  accountId String  @unique @map("account_id")
+  account   Account @relation(fields: [accountId], references: [id])
 }
 
 model Account {
-  id      String @id @default(uuid())
-  balance Float  @default(100)
+  id      String  @id @default(uuid())
+  balance Decimal @default(100)
   user    User?
 
-  transactions Transaction[]
-
-  @@map("accounts")
+  accountsToTransactionsDebitedAccount  Transaction[] @relation("accounts_to_transactions_debited_account_id")
+  accountsToTransactionsCreditedAccount Transaction[] @relation("accounts_to_transactions_credited_account_id")
 }
 
 model Transaction {
   id                String   @id @default(uuid())
-  debitedAccountId  String   @map("debited_account_id")
-  creditedAccountId String   @map("credited_account_id")
-  value             Float
+  value             Decimal
   createdAt         DateTime @default(now()) @map("created_at")
+  debitedAccountId  String   @unique @map("debited_account_id")
+  creditedAccountId String   @unique @map("credited_account_id")
 
-  account   Account? @relation(fields: [accountId], references: [id])
-  accountId String?
-
-  @@unique([debitedAccountId, creditedAccountId])
-  @@map("transactions")
+  accountToTransactionsDebitedAccount  Account @relation("accounts_to_transactions_debited_account_id", fields: [debitedAccountId], references: [id])
+  accountToTransactionsCreditedAccount Account @relation("accounts_to_transactions_credited_account_id", fields: [creditedAccountId], references: [id])
 }
