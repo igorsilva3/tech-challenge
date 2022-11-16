@@ -27,6 +27,8 @@
   },
   "scripts": {
     "dev": "dotenv -e ./.env -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
-    "test": "dotenv -e ./.env.test -- jest --detectOpenHandles -i --forceExit"
+    "pretest": "dotenv -e ./.env.test -- prisma migrate deploy",
+    "test": "dotenv -e ./.env.test -- jest --detectOpenHandles -i --forceExit",
+    "posttest": "dotenv -e ./.env.test -- prisma migrate reset --force --skip-generate"
   }
 }
