@@ -9,3 +9,40 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  accountId String   @unique @map("account_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  account Account @relation(fields: [accountId], references: [id])
+
+  @@map("users")
+}
+
+model Account {
+  id      String @id @default(uuid())
+  balance Float  @default(100)
+  user    User?
+
+  transactions Transaction[]
+
+  @@map("accounts")
+}
+
+model Transaction {
+  id                String   @id @default(uuid())
+  debitedAccountId  String   @map("debited_account_id")
+  creditedAccountId String   @map("credited_account_id")
+  value             Float
+  createdAt         DateTime @default(now()) @map("created_at")
+
+  account   Account? @relation(fields: [accountId], references: [id])
+  accountId String?
+
+  @@unique([debitedAccountId, creditedAccountId])
+  @@map("transactions")
+}
