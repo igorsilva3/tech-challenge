@@ -1,0 +1,32 @@
+{
+  "name": "tech-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Igor Silva <igorbr2018@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.6.1",
+    "cors": "^2.8.5",
+    "dotenv-cli": "^4.1.1",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.3",
+    "@types/morgan": "^1.9.3",
+    "@types/supertest": "^2.0.11",
+    "jest": "^27.4.3",
+    "prisma": "^4.6.1",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
+    "ts-node-dev": "^1.1.8",
+    "tsconfig-paths": "^3.12.0",
+    "typescript": "^4.5.2"
+  },
+  "scripts": {
+    "dev": "dotenv -e ./.env -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
+    "test": "dotenv -e ./.env.test -- jest --detectOpenHandles -i --forceExit"
+  }
+}

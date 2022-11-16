@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "rootDir": "./",
+    "baseUrl": "./src",
+    "moduleResolution": "node",
+    "paths": {
+      "@app": [
+        "app"
+      ],
+      "@env": [
+        "env"
+      ],
+      "@server": [
+        "server"
+      ],
+      "@routes": [
+        "routes"
+      ],
+      "@views/*": [
+        "views/*"
+      ],
+      "@services/*": [
+        "services/*"
+      ],
+      "@routes/*": [
+        "routes/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "outDir": "<rootDir>/dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true
+  }
+}
