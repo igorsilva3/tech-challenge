@@ -26,6 +26,12 @@
       ],
       "@routes/*": [
         "routes/*"
+      ],
+      "@controllers/*": [
+        "controllers/*"
+      ],
+      "@middlewares/*": [
+        "middlewares/*"
       ]
     },
     "resolveJsonModule": true,

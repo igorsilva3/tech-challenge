@@ -21,11 +21,22 @@ beforeAll(async () => {
 })
 
 describe('Auth controller', () => {
-  it('should to be able authentica a user', async () => {
+  it('should to be able authenticate a user', async () => {
     const { statusCode, body } = await request.post('/auth').send(data)
 
     expect(statusCode).toBe(200)
     expect(body).toHaveProperty('token')
+  })
+
+  it('not should to be able authenticate a user with username or password invalid', async () => {
+    const { statusCode, body } = await request.post('/auth').send({
+      ...data,
+      password: faker.internet.password()
+    })
+
+    expect(statusCode).toBe(401)
+    expect(body).toHaveProperty('message')
+    expect(body.message).toContain('username or password invalid')
   })
 })
 
