@@ -28,6 +28,9 @@ export class CreateUserService implements ICreateUserService {
           }
         }
       },
+      include: {
+        account: true
+      }
     })
 
     return user

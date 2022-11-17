@@ -9,12 +9,12 @@ interface IGetTransactionServiceDTO {
 }
 
 interface IGetTransactionService {
-  execute(data: IGetTransactionServiceDTO): Promise<Transaction | Transaction[]>
+  execute(data: IGetTransactionServiceDTO): Promise<Transaction>
 }
 
 export class GetTransactionService implements IGetTransactionService {
-  async execute(data: IGetTransactionServiceDTO): Promise<Transaction | Transaction[]> {
-    const transaction = await prisma.transaction.findMany({
+  async execute(data: IGetTransactionServiceDTO): Promise<Transaction> {
+    const transaction = await prisma.transaction.findUniqueOrThrow({
       where: {
         id: data.where.id,
       },
