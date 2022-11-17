@@ -5,6 +5,7 @@ import { GetUserService } from '@services/UserServices/GetUserService'
 
 
 let id: string
+let username: string
 
 const getUserService = new GetUserService()
 
@@ -19,6 +20,7 @@ beforeAll(async () => {
   })
 
   id = user.id
+  username = user.username
 })
 
 describe('Get User Service',  () => {
@@ -26,6 +28,17 @@ describe('Get User Service',  () => {
     const user = await getUserService.execute({
       where: {
         id
+      }
+    })
+
+    expect(user).toHaveProperty('id')
+    expect(user).toHaveProperty('accountId')
+  })
+
+  it('should to be able get a user by username', async () => {
+    const user = await getUserService.execute({
+      where: {
+        username
       }
     })
 

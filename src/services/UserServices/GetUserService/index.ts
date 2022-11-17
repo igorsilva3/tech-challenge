@@ -4,19 +4,21 @@ const prisma = new PrismaClient()
 
 interface IGetUserServiceDTO {
   where: {
-    id: string
+    id?: string,
+    username?: string
   }
 }
 
 interface IGetUserService {
-  execute(data: IGetUserServiceDTO): Promise<User | null>
+  execute(data: IGetUserServiceDTO): Promise<User>
 }
 
 export class GetUserService implements IGetUserService {
-  async execute(data: IGetUserServiceDTO): Promise<User | null> {
-    const user = await prisma.user.findUnique({
+  async execute(data: IGetUserServiceDTO): Promise<User> {
+    const user = await prisma.user.findUniqueOrThrow({
       where: {
-        id: data.where.id
+        id: data.where.id,
+        username: data.where.username
       }
     })
 
