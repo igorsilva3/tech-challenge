@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client'
+import { Account, PrismaClient, User } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ interface ICreateUserService {
 }
 
 export class CreateUserService implements ICreateUserService {
-  async execute({ data }: ICreateUserServiceDTO): Promise<User> {
+  async execute({ data }: ICreateUserServiceDTO): Promise<User & { account: Account }> {
     const user = await prisma.user.create({
       data: {
         username: data.username,

@@ -1,4 +1,4 @@
-import { PrismaClient, User } from '@prisma/client'
+import { Account, PrismaClient, User } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -14,11 +14,14 @@ interface IGetUserService {
 }
 
 export class GetUserService implements IGetUserService {
-  async execute(data: IGetUserServiceDTO): Promise<User> {
+  async execute(data: IGetUserServiceDTO): Promise<User & { account: Account }> {
     const user = await prisma.user.findUniqueOrThrow({
       where: {
         id: data.where.id,
         username: data.where.username
+      },
+      include: {
+        account: true
       }
     })
 

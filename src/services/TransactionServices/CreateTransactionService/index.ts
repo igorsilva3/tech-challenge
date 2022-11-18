@@ -26,11 +26,11 @@ export class CreateTransactionService implements ICreateTransactionService {
     })
 
     if(data.value < 0) {
-      throw 'Unauthorized transaction amount'
+      throw new Error('Unauthorized transaction amount')
     }
 
     if (Number(debitedAccount.balance) < data.value) {
-      throw 'Do not have enough balance'
+      throw new Error('Do not have enough balance')
     }
 
     const creditedAccount = await accountService.getAccountService.execute({

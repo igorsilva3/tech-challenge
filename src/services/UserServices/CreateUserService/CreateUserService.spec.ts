@@ -29,14 +29,9 @@ describe('Create User Service',  () => {
       }
     })
 
-    const account = await accountService.getAccountService.execute({
-      where: {
-        id: user.accountId
-      }
-    })
 
     expect(user).toHaveProperty('id')
-    expect(user).toHaveProperty('accountId')
-    expect(Number(account?.balance)).toEqual(50)
+    expect(user).toHaveProperty('account')
+    expect(Number(user.account.balance)).toEqual(50)
   })
 })

@@ -116,7 +116,7 @@ describe('Create Transaction Service', () => {
       })
       .catch((error) => {
         /* Checking if the error is equal to 'Do not have enough balance'. */
-        expect(error).toBe('Do not have enough balance')
+        expect(error.message).toBe('Do not have enough balance')
       })
   })
 
@@ -131,8 +131,8 @@ describe('Create Transaction Service', () => {
         value: -30,
       })
       .catch((error) => {
-        /* Checking if the error is equal to 'Do not have enough balance'. */
-        expect(error).toBe('Unauthorized transaction amount')
+        /* Checking if the message error is equal to 'Do not have enough balance'. */
+        expect(error.message).toBe('Unauthorized transaction amount')
       })
   })
 })
