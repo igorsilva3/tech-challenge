@@ -31,12 +31,12 @@ describe('Auth controller', () => {
   it('not should to be able authenticate a user with username or password invalid', async () => {
     const { statusCode, body } = await request.post('/auth').send({
       ...data,
-      password: faker.internet.password()
+      password: 'passW0rd1'
     })
 
     expect(statusCode).toBe(401)
     expect(body).toHaveProperty('message')
-    expect(body.message).toContain('username or password invalid')
+    expect(body.message).toBe('username or password invalid')
   })
 })
 
