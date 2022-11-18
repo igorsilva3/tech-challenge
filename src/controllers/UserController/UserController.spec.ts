@@ -15,6 +15,7 @@ describe('User controller', () => {
 
     expect(statusCode).toBe(201)
     expect(body).toHaveProperty('username')
+    expect(body).not.toHaveProperty('password')
   })
 })
 

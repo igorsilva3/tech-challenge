@@ -4,9 +4,10 @@ import { ValidationError } from 'yup'
 
 import { UserServices } from '@services/UserServices'
 import { userSchemaValidation } from './UserSchemaValidation'
-
+import { UserView } from '@views/UserView'
 
 const userServices = new UserServices()
+const userView = new UserView()
 
 export class UserController {
   async create(req: Request, res: Response) {
@@ -33,7 +34,7 @@ export class UserController {
         }
       })
 
-      return res.status(201).json(user)
+      return res.status(201).json(userView.render(user))
       
     } catch (error: any) {
       return res.status(400).json(error instanceof ValidationError

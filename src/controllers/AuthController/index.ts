@@ -6,6 +6,7 @@ import { KeyLike, SignJWT } from 'jose'
 import { UserServices } from '@services/UserServices'
 import { userSchemaValidation } from './../UserController/UserSchemaValidation'
 import { env } from '@env'
+import { UserView } from '@views/UserView'
 
 interface IGenerateTokenDTO {
   payload: any
@@ -14,6 +15,7 @@ interface IGenerateTokenDTO {
 }
 
 const userServices = new UserServices()
+const userView = new UserView()
 
 async function generateToken(data: IGenerateTokenDTO): Promise<string> {
   const jwtIssuer = String(env('JWT_ISSUER'))
@@ -75,7 +77,7 @@ export class AuthController {
 
       
       return res.status(200).json({
-        user,
+        user: userView.render(user),
         token
       })
       
