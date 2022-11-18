@@ -30,8 +30,8 @@ model Transaction {
   id                String   @id @default(uuid())
   value             Decimal
   createdAt         DateTime @default(now()) @map("created_at")
-  debitedAccountId  String   @unique @map("debited_account_id")
-  creditedAccountId String   @unique @map("credited_account_id")
+  debitedAccountId  String   @map("debited_account_id")
+  creditedAccountId String   @map("credited_account_id")
 
   accountToTransactionsDebitedAccount  Account @relation("accounts_to_transactions_debited_account_id", fields: [debitedAccountId], references: [id])
   accountToTransactionsCreditedAccount Account @relation("accounts_to_transactions_credited_account_id", fields: [creditedAccountId], references: [id])
