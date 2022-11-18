@@ -51,4 +51,48 @@ export class TransactionController {
       return res.status(400).json({ message: error.message })
     }
   } 
+
+  async showCashOut(req: Request, res: Response) {
+    try {
+      const { userId } = req.body
+
+      const { accountId } = await getUserService.execute({
+        where: {
+          id: userId
+        }
+      })
+
+      const transactions = await transactionServices.getCashOutTransactionsService.execute({
+        where: {
+          creditedAccountId: accountId
+        }
+      })
+
+      return res.status(200).json(transactions)
+    } catch (error: any) {
+      return res.status(400).json({ message: error.message })
+    }
+  }
+
+  async showCashIn(req: Request, res: Response) {
+    try {
+      const { userId } = req.body
+
+      const { accountId } = await getUserService.execute({
+        where: {
+          id: userId
+        }
+      })
+
+      const transactions = await transactionServices.getCashInTransactionsService.execute({
+        where: {
+          debitedAccountId: accountId
+        }
+      })
+
+      return res.status(200).json(transactions)
+    } catch (error: any) {
+      return res.status(400).json({ message: error.message })
+    }
+  }
 }
