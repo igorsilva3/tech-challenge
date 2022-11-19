@@ -1,26 +1,21 @@
 import { CreateTransactionService } from '@services/TransactionServices/CreateTransactionService'
 import { GetTransactionService } from '@services/TransactionServices/GetTransactionService'
-import { GetCashOutTransactionsService } from '@services/TransactionServices/GetCashOutTransactions'
-import { GetCashInTransactionsService } from '@services/TransactionServices/GetCashInTransactions'
+import { GetAllTransactionsService } from '@services/TransactionServices/GetAllTransactionsService'
 
 interface ITransactionServices {
   createTransactionService: CreateTransactionService
   getTransactionService: GetTransactionService
-  getCashOutTransactionsService: GetCashOutTransactionsService
-  getCashInTransactionsService: GetCashInTransactionsService
+  getAllTransactionsService: GetAllTransactionsService
 }
 
 export class TransactionServices implements ITransactionServices {
   createTransactionService: CreateTransactionService
   getTransactionService: GetTransactionService
-  getCashInTransactionsService: GetCashInTransactionsService
-  getCashOutTransactionsService: GetCashOutTransactionsService
-
+  getAllTransactionsService: GetAllTransactionsService
 
   constructor () {
     this.createTransactionService = new CreateTransactionService()
     this.getTransactionService = new GetTransactionService()
-    this.getCashOutTransactionsService = new GetCashOutTransactionsService()
-    this.getCashInTransactionsService = new GetCashInTransactionsService()
+    this.getAllTransactionsService = new GetAllTransactionsService()
   }
 }
