@@ -7,3 +7,9 @@ export const transactionSchemaValidation = Yup.object().shape({
     .positive()
     .min(0.1)
 })
+
+export const transactionSchemaQueryParamsValidation = Yup.object().shape({
+  cashIn: Yup.bool().optional(),
+  cashOut: Yup.bool().optional(),
+  createdAt: Yup.date().optional()
+})

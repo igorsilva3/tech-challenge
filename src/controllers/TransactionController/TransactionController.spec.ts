@@ -9,13 +9,15 @@ const request = agent(app)
 const userOne = {
   username: faker.internet.userName(),
   password: 'account05Add',
-  token: ''
+  token: '',
+  accountId: ''
 }
 
 const userTwo = {
   username: faker.internet.userName(),
   password: 'account06Add',
-  token: ''
+  token: '',
+  accountId: ''
 }
 
 beforeAll(async () => {
@@ -44,12 +46,16 @@ beforeAll(async () => {
   userOne.token = responseUserOne.body.token
   userTwo.token = responseUserTwo.body.token
 
+  /* Setting the accountId of the users. */
+  userOne.accountId = responseUserOne.body.user.account.id
+  userTwo.accountId = responseUserTwo.body.user.account.id
+
   /* Setting the authorization header to the request object. */
   request.set({ authorization: `Bearer ${userOne.token}` })
 })
 
 describe('Transaction controller', () => {
-  it('should to be able a transaction of userOne to userTwo', async () => {
+  it('should to be able create a transaction of userOne to userTwo', async () => {
     const { statusCode, body } = await request.post('/users/account/transactions').send({
       username: userTwo.username,
       value: faker.datatype.float({
@@ -63,7 +69,7 @@ describe('Transaction controller', () => {
     expect(body).toHaveProperty('creditedAccountId')
   })
 
-  it.skip('not should to be able a transaction of userOne to userTwo with not enough balance', async () => {
+  it('not should to be able create a transaction of userOne to userTwo with not enough balance', async () => {
     const { statusCode, body } = await request.post('/users/account/transactions').send({
       username: userTwo.username,
       value: 200
@@ -74,7 +80,7 @@ describe('Transaction controller', () => {
     expect(body.message).toBe('Do not have enough balance')
   })
 
-  it.skip('not should to be able a transaction of userOne to userTwo with unauthorized amount', async () => {
+  it('not should to be able create a transaction of userOne to userTwo with unauthorized amount', async () => {
     const { statusCode, body } = await request.post('/users/account/transactions').send({
       username: userTwo.username,
       value: -10
@@ -85,7 +91,7 @@ describe('Transaction controller', () => {
     expect(body.message).toBe('value must be greater than or equal to 0.1')
   })
 
-  it.skip('not should to be able a transaction of userOne to userOne', async () => {
+  it('not should to be able create a transaction of userOne to userOne', async () => {
     const { statusCode, body } = await request.post('/users/account/transactions').send({
       username: userOne.username,
       value: 10
@@ -96,22 +102,53 @@ describe('Transaction controller', () => {
     expect(body.message).toBe('User cannot perform the transaction to himself')
   })
 
-  it('should to be able get cash-out transactions of a user', async () => {
+  it('should to be able get all transactions of a user', async () => {
     request.set({ authorization: `Bearer ${userTwo.token}` })
 
-    const { statusCode, body } = await request.get('/users/account/transactions/cash-out')
+    const { statusCode, body } = await request.get('/users/account/transactions')
 
     expect(statusCode).toBe(200)
     expect(body.length > 0).toBe(true)
+    expect(body[0]).toHaveProperty('createdAt')
   })
 
-  it('should to be able get cash-in transactions of a user', async () => {
-    request.set({ authorization: `Bearer ${userOne.token}` })
+  it('should to be able get all transactions of a user filtered by cash-in', async () => {
+    request.set({ authorization: `Bearer ${userTwo.token}` })
 
-    const { statusCode, body } = await request.get('/users/account/transactions/cash-in')
+    const { statusCode, body } = await request.get('/users/account/transactions/?cashIn=true')
 
     expect(statusCode).toBe(200)
     expect(body.length > 0).toBe(true)
+    expect(body[0]).toHaveProperty('createdAt')
+    expect(body[0].creditedAccountId).toEqual(userTwo.accountId)
+  })
+
+  it('should to be able get all transactions of a user filtered by cash-out', async () => {
+    request.set({ authorization: `Bearer ${userOne.token}` })
+
+    const { statusCode, body } = await request.get('/users/account/transactions/?cashOut=true')
+
+    expect(statusCode).toBe(200)
+    expect(body.length > 0).toBe(true)
+    expect(body[0]).toHaveProperty('createdAt')
+    expect(body[0].debitedAccountId).toEqual(userOne.accountId)
+  })
+
+  it('should to be able get all transactions of a user filtered by created-at', async () => {
+    request.set({ authorization: `Bearer ${userOne.token}` })
+    
+    /* Getting the current date in the format `YYYY-MM-DD`. */
+    const selectDate = new Date().toISOString().slice(0, 10)
+    
+    const { statusCode, body } = await request.get(`/users/account/transactions/?createdAt=${selectDate}`)
+
+    /* Getting the date of the transaction. */
+    const transactionDate = body[0].createdAt.slice(0, 10)
+
+    expect(statusCode).toBe(200)
+    expect(body.length > 0).toBe(true)
+    expect(body[0]).toHaveProperty('createdAt')
+    expect(transactionDate).toEqual(selectDate)
   })
 })
 
