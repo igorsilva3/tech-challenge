@@ -34,6 +34,7 @@
   "scripts": {
     "prestart": "dotenv -e ./.env prisma migrate deploy",
     "start": "dotenv -e ./.env -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
+    "predev": "dotenv -e ./.env.development  prisma migrate deploy",
     "dev": "dotenv -e ./.env.development -- tsnd -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/index.ts",
     "pretest": "dotenv -e ./.env.test -- prisma migrate deploy",
     "test": "dotenv -e ./.env.test -- jest --detectOpenHandles -i --forceExit",
