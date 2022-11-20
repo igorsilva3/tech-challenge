@@ -1,40 +1,20 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
-
-<h3 align="center">Tech challenge</h3>
-
-<div align="center">
-
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/igorsilva3/The-Documentation-Compendium.svg)](https://github.com/igorsilva3/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/igorsilva3/The-Documentation-Compendium.svg)](https://github.com/igorsilva3/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
-</div>
+<h1 align="center">Tech challenge</h3>
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center">A backend application, dockerized, whose objective is to enable NG users to be able to perform internal transfers between themselves.
     <br> 
 </p>
 
 ## 📝 Table of Contents
 
-- [About](#about)
 - [Getting Started](#getting_started)
-- [Deployment](#deployment)
+  - [Prerequisites](#prerequisites)
+  - [Installing](#installing)
+- [Running the tests](#tests)
 - [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
-
-## 🧐 About <a name = "about"></a>
-
-Write about 1-2 paragraphs describing the purpose of your project.
+- [Deployment](#deployment)
+- [Author](#author)
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -42,66 +22,107 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
+These programs installed on your machine:
+  - [NodeJS v16.17.1](https://nodejs.org/en/download/)
+  - [Postgresql](https://www.postgresql.org/download/)
+  - [Yarn](https://classic.yarnpkg.com/en/docs/install)
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
+Installing the dependencies
 
-```
-Give the example
+```bash
+yarn install
 ```
 
-And repeat
+Create the .env file
 
+```bash
+touch .env
 ```
-until finished
+
+Then configure your environment variables by editing the .env file
+
+```env
+SERVER_HOST="Your server host" (optional)
+SERVER_PORT="Your server port" (optional)
+
+DATABASE_URL="Your connection URL to point to your own database."
+
+JWT_SECRET="Your secret password"
+JWT_AUDIENCE="Your jwt audience" (optional)
+JWT_ISSUER="Your jwt issuer" (optional)
+```
+
+For more information about URL connection, visit: [Prisma - Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
+
+Applying database migrations
+
+```bash
+yarn prisma migrate deploy
 ```
 
 End with an example of getting some data out of the system or using it for a little demo.
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Explain how to run the automated tests for this system.
+Create the .env.test file
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+```bash
+touch .env.test
 ```
 
-### And coding style tests
+Then configure your environment variables by editing the .env.test file
 
-Explain what these tests test and why
+```env
+SERVER_HOST="Your server host" (optional)
+SERVER_PORT="Your server port" (optional)
 
+DATABASE_URL="Your connection URL to point to your own test database."
+
+JWT_SECRET="Your secret password"
+JWT_AUDIENCE="Your jwt audience" (optional)
+JWT_ISSUER="Your jwt issuer" (optional)
 ```
-Give an example
+
+For more information about URL connection, visit: [Prisma - Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
+
+Running tests
+
+```bash
+yarn test
 ```
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+Execute the command
+
+```bash
+yarn start
+```
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
-Add additional notes about how to deploy this on a live system.
+Let's use docker compose for application deployment
+
+Execute the command
+
+```bash
+docker-compose up
+```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
+- [PostgreSQL](https://www.postgresql.org/) - Database
 - [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
+- [Typescript](https://www.typescriptlang.org/) - Programming language
 - [NodeJs](https://nodejs.org/en/) - Server Environment
+- [Prisma](https://www.prisma.io/) - Object Relational Mapping (ORM)
+- [Jest](https://jestjs.io/) - Test Framework
 
-## ✍️ Authors <a name = "authors"></a>
+## ✍️ Author <a name = "author"></a>
 
-- [@igorsilva3](https://github.com/igorsilva3) - Idea & Initial work
+- [@igorsilva3](https://github.com/igorsilva3) - Igor Silva
 
