@@ -54,4 +54,14 @@ describe('Transaction schema validation', () => {
 
     expect(validation).toBeTruthy()
   })
+
+  it('should to be able validate transaction query params: filter', async () => {
+    const queryParams = {
+      filter: 5
+    }
+
+    const validation = await transactionSchemaQueryParamsValidation.isValid(queryParams)
+
+    expect(validation).toBeTruthy()
+  })
 })

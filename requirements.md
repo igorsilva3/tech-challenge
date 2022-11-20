@@ -16,7 +16,7 @@
 
 - [x] Todo usuário logado (ou seja, que apresente um token válido) deverá ser capaz de visualizar as transações financeiras (*cash-out* e *cash-in*) que participou. Caso o usuário não tenha participado de uma determinada transação, ele nunca poderá ter acesso à ela.
 
-- [] Todo usuário logado (ou seja, que apresente um token válido) deverá ser capaz de filtrar as transações financeiras que participou por:
-    - [] Data de realização da transação e/ou
-        - [] Transações de *cash-out;*
-        - [] Transações de *cash-in.*
+- [x] Todo usuário logado (ou seja, que apresente um token válido) deverá ser capaz de filtrar as transações financeiras que participou por:
+    - [x] Data de realização da transação e/ou
+        - [x] Transações de *cash-out;*
+        - [x] Transações de *cash-in.*

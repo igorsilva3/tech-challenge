@@ -61,12 +61,13 @@ export class TransactionController {
   async show(req: Request, res: Response) {
     try {
       const { userId } = req.body
-      const { cashIn, cashOut, createdAt } = req.query
+      const { cashIn, cashOut, createdAt, filter } = req.query
 
       const queryParams = {
         cashIn,
         cashOut,
         createdAt,
+        filter
       }
 
       await transactionSchemaQueryParamsValidation.validate(queryParams, {
@@ -89,12 +90,12 @@ export class TransactionController {
             transactionsDebitedAccount: queryParams.cashOut ? Boolean(queryParams.cashOut) : undefined,
             createdAt: queryParams.createdAt ? new Date(String(queryParams.createdAt)) : undefined
           },
+          filter: Number(queryParams.filter)
         },
       )
 
       return res.status(200).json(transactions)
     } catch (error: any) {
-      console.log(error);
       return res.status(400).json(
         error instanceof ValidationError
           ? {

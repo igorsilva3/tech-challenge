@@ -11,5 +11,6 @@ export const transactionSchemaValidation = Yup.object().shape({
 export const transactionSchemaQueryParamsValidation = Yup.object().shape({
   cashIn: Yup.bool().optional(),
   cashOut: Yup.bool().optional(),
-  createdAt: Yup.date().optional()
+  createdAt: Yup.date().optional(),
+  filter: Yup.number().optional()
 })
