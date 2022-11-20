@@ -4,7 +4,7 @@ import { env } from '@env'
 const app = new App().core
 
 const host = env('SERVER_HOST') || 'localhost'
-const port = env('SERVER_PORT') || 6666
+const port = env('SERVER_PORT') || 3000
 
 interface ISettings {
   host?: string
