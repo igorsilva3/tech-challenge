@@ -1,17 +1,15 @@
-FROM node:16.17.1
+FROM node:16.17.1-alpine
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-COPY yarn.lock ./
+
+RUN npm install
 
 COPY . .
 
-RUN yarn install
+RUN npx prisma generate
 
-RUN yarn prisma generate
-RUN yarn prisma migrate deploy
+EXPOSE 6666
 
-EXPOSE 5555
-
-CMD [ "yarn", "dev" ]
+CMD [ "npm", "start" ]
