@@ -1,0 +1,24 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: postgres
+    hostname: postgres
+    ports:
+      - 5432:5432
+    env_file:
+      - .env.database
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: igorsilva3-tech-challenge
+    depends_on:
+      - postgres
+    ports:
+      - 6666:6666
+    env_file:
+      - .env
+    restart: always
