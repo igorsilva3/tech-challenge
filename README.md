@@ -26,6 +26,61 @@ These programs installed on your machine:
   - [NodeJS v16.17.1](https://nodejs.org/en/download/)
   - [Postgresql](https://www.postgresql.org/download/)
   - [Yarn](https://classic.yarnpkg.com/en/docs/install)
+  
+#### Envrionments file configuration
+
+Create the environment files for production, development and test
+
+```bash
+touch .env .env.development .env.test
+```
+
+Then configure your environment variables by editing each file
+
+_Editing .env file_
+
+```env
+POSTGRES_USER="Your postgres user"
+POSTGRES_PASSWORD="Your postgres password"
+POSTGRES_DB="Your postgres database"
+
+DATABASE_URL="postgres://${YOUR_POSTGRES_USER}:${YOUR_POSTGRES_PASSWORD}@postgres:5432/${YOUR_POSTGRES_DB}?schema=public"
+
+JWT_SECRET="Your secret password"
+JWT_AUDIENCE="Your jwt audience" (optional)
+JWT_ISSUER="Your jwt issuer" (optional)
+
+SERVER_HOST="Your server host" (optional)
+SERVER_PORT="Your server port" (optional)
+```
+---
+_Editing .env.development file_
+
+```env
+DATABASE_URL="postgres://${YOUR_POSTGRES_USER}:${YOUR_POSTGRES_PASSWORD}@localhost:5432/${YOUR_POSTGRES_DB}?schema=public"
+
+JWT_SECRET="Your secret password"
+JWT_AUDIENCE="Your jwt audience" (optional)
+JWT_ISSUER="Your jwt issuer" (optional)
+
+SERVER_HOST="Your server host" (optional)
+SERVER_PORT="Your server port" (optional)
+```
+---
+_Editing .env.test file_
+
+```env
+DATABASE_URL="postgres://${YOUR_POSTGRES_USER}:${YOUR_POSTGRES_PASSWORD}@localhost:5432/${YOUR_POSTGRES_TEST_DB}?schema=public"
+
+JWT_SECRET="Your secret password"
+JWT_AUDIENCE="Your jwt audience" (optional)
+JWT_ISSUER="Your jwt issuer" (optional)
+
+SERVER_HOST="Your server host" (optional)
+SERVER_PORT="Your server port" (optional)
+```
+
+For more information about URL connection, visit: [Prisma - Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
 
 ### Installing
 
@@ -37,59 +92,11 @@ Installing the dependencies
 yarn install
 ```
 
-Create the .env file
-
-```bash
-touch .env
-```
-
-Then configure your environment variables by editing the .env file
-
-```env
-SERVER_HOST="Your server host" (optional)
-SERVER_PORT="Your server port" (optional)
-
-DATABASE_URL="Your connection URL to point to your own database."
-
-JWT_SECRET="Your secret password"
-JWT_AUDIENCE="Your jwt audience" (optional)
-JWT_ISSUER="Your jwt issuer" (optional)
-```
-
-For more information about URL connection, visit: [Prisma - Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
-
-Applying database migrations
-
-```bash
-yarn prisma migrate deploy
-```
-
 End with an example of getting some data out of the system or using it for a little demo.
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Create the .env.test file
-
-```bash
-touch .env.test
-```
-
-Then configure your environment variables by editing the .env.test file
-
-```env
-SERVER_HOST="Your server host" (optional)
-SERVER_PORT="Your server port" (optional)
-
-DATABASE_URL="Your connection URL to point to your own test database."
-
-JWT_SECRET="Your secret password"
-JWT_AUDIENCE="Your jwt audience" (optional)
-JWT_ISSUER="Your jwt issuer" (optional)
-```
-
-For more information about URL connection, visit: [Prisma - Connect your database](https://www.prisma.io/docs/getting-started/setup-prisma/add-to-existing-project/relational-databases/connect-your-database-typescript-postgres)
-
-Running tests
+Execute the command to run the tests
 
 ```bash
 yarn test
@@ -100,8 +107,10 @@ yarn test
 Execute the command
 
 ```bash
-yarn start
+yarn dev
 ```
+
+Access the application: http://localhost:6666/ OR http://localhost:{YOUR_SERVER_PORT}/
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
@@ -113,6 +122,8 @@ Execute the command
 docker-compose up
 ```
 
+Access the application: http://localhost:6666/
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [PostgreSQL](https://www.postgresql.org/) - Database
@@ -121,6 +132,7 @@ docker-compose up
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 - [Prisma](https://www.prisma.io/) - Object Relational Mapping (ORM)
 - [Jest](https://jestjs.io/) - Test Framework
+- [Swagger](https://swagger.io/) - API DOCS Framework
 
 ## ✍️ Author <a name = "author"></a>
 
