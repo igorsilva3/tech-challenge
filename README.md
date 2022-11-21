@@ -27,7 +27,7 @@ These programs installed on your machine:
   - [Postgresql](https://www.postgresql.org/download/)
   - [Yarn](https://classic.yarnpkg.com/en/docs/install)
   
-#### Envrionments file configuration
+#### Environments file configuration
 
 Create the environment files for production, development and test
 
