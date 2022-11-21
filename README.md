@@ -110,7 +110,7 @@ Execute the command
 yarn dev
 ```
 
-Access the application: http://localhost:6666/ OR http://localhost:{YOUR_SERVER_PORT}/
+Access the application: http://localhost:3000/ OR http://localhost:{YOUR_SERVER_PORT}/
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
@@ -122,7 +122,7 @@ Execute the command
 docker-compose up
 ```
 
-Access the application: http://localhost:6666/
+Access the application: http://localhost:3000/
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
