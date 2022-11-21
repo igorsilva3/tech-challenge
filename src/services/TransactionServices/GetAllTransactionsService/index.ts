@@ -47,49 +47,22 @@ export class GetAllTransactionsService implements IGetAllTransactionsService {
       !data.select?.transactionsDebitedAccount &&
       !data.select?.createdAt
     ) {
-      const transactionsCreditedAccount = accountsToTransactionsCreditedAccount.filter(
-        (transaction) => {
-          if (transaction.creditedAccountId == data.where.accountId)
-            return transaction
-        },
+      transactions.push(
+        ...accountsToTransactionsCreditedAccount,
+        ...accountsToTransactionsDebitedAccount,
       )
-
-      const transactionsDebitedAccount = accountsToTransactionsDebitedAccount.filter(
-        (transaction) => {
-          if (transaction.debitedAccountId == data.where.accountId)
-            return transaction
-        },
-      )
-
-      transactions.push(...transactionsCreditedAccount)
-      transactions.push(...transactionsDebitedAccount)
     }
 
     /* Checking if the user wants to get the transactionsCreditedAccount, if so, it will push the
     transactionsCreditedAccount to the transactions array. */
     if (data.select?.transactionsCreditedAccount) {
-      /* It's filtering the transactionsCreditedAccount by the accountId. */
-      const transactionCredited = accountsToTransactionsCreditedAccount.filter(
-        (transaction) => {
-          if (transaction.creditedAccountId == data.where.accountId)
-            return transaction
-        },
-      )
-
-      transactions.push(...transactionCredited)
+      transactions.push(...accountsToTransactionsCreditedAccount)
     }
 
     /* Checking if the user wants to get the transactionsDebitedAccount, if so, it will push the
     transactionsDebitedAccount to the transactions array. */
     if (data.select?.transactionsDebitedAccount) {
-      const transactionDebited = accountsToTransactionsDebitedAccount.filter(
-        (transaction) => {
-          if (transaction.debitedAccountId == data.where.accountId)
-            return transaction
-        },
-      )
-
-      transactions.push(...transactionDebited)
+      transactions.push(...accountsToTransactionsDebitedAccount)
     }
 
     /* It's filtering the transactions by createdAt. */
@@ -124,6 +97,82 @@ export class GetAllTransactionsService implements IGetAllTransactionsService {
 
       transactions.push(...transactionCreditedFilteredByCreatedAt)
       transactions.push(...transactionDebitedFilteredByCreatedAt)
+    }
+
+    if (data.select?.createdAt && data.select.transactionsCreditedAccount && data.select.transactionsDebitedAccount) {
+      const transactionCreditedFilteredByCreatedAt = accountsToTransactionsCreditedAccount.filter(
+        (transaction) => {
+          /* It's getting the date of the transaction and the date that the user selected. */
+          const transactionDate = transaction.createdAt
+            .toISOString()
+            .slice(0, 10)
+          const selectDate = data.select?.createdAt?.toISOString().slice(0, 10)
+
+          if (transactionDate == selectDate) {
+            return transaction
+          }
+        },
+      )
+
+      const transactionDebitedFilteredByCreatedAt = accountsToTransactionsDebitedAccount.filter(
+        (transaction) => {
+          /* It's getting the date of the transaction and the date that the user selected. */
+          const transactionDate = transaction.createdAt
+            .toISOString()
+            .slice(0, 10)
+          const selectDate = data.select?.createdAt?.toISOString().slice(0, 10)
+
+          if (transactionDate == selectDate) {
+            return transaction
+          }
+        },
+      )
+
+      if(transactionCreditedFilteredByCreatedAt.length == 0 || transactionDebitedFilteredByCreatedAt.length == 0) {
+        return []
+      }
+
+      return [
+        ...transactionCreditedFilteredByCreatedAt,
+        ...transactionDebitedFilteredByCreatedAt,
+      ]
+    }
+
+    if(data.select?.createdAt && data.select.transactionsCreditedAccount) {
+      console.log("entrou 1");
+      const transactionCreditedFilteredByCreatedAt = accountsToTransactionsCreditedAccount.filter(
+        (transaction) => {
+          /* It's getting the date of the transaction and the date that the user selected. */
+          const transactionDate = transaction.createdAt
+            .toISOString()
+            .slice(0, 10)
+          const selectDate = data.select?.createdAt?.toISOString().slice(0, 10)
+
+          if (transactionDate == selectDate) {
+            return transaction
+          }
+        },
+      )
+
+      return transactionCreditedFilteredByCreatedAt
+    }
+
+    if(data.select?.createdAt && data.select.transactionsDebitedAccount) {
+      const transactionDebitedFilteredByCreatedAt = accountsToTransactionsDebitedAccount.filter(
+        (transaction) => {
+          /* It's getting the date of the transaction and the date that the user selected. */
+          const transactionDate = transaction.createdAt
+            .toISOString()
+            .slice(0, 10)
+          const selectDate = data.select?.createdAt?.toISOString().slice(0, 10)
+
+          if (transactionDate == selectDate) {
+            return transaction
+          }
+        },
+      )
+
+      return transactionDebitedFilteredByCreatedAt
     }
 
     return transactions

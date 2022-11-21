@@ -86,8 +86,8 @@ export class TransactionController {
             accountId,
           },
           select: {
-            transactionsCreditedAccount: queryParams.cashIn ? Boolean(queryParams.cashIn) : undefined,
-            transactionsDebitedAccount: queryParams.cashOut ? Boolean(queryParams.cashOut) : undefined,
+            transactionsCreditedAccount: (queryParams.cashIn == 'true') ? true : undefined,
+            transactionsDebitedAccount: (queryParams.cashOut == 'true') ? true: undefined,
             createdAt: queryParams.createdAt ? new Date(String(queryParams.createdAt)) : undefined
           },
           filter: Number(queryParams.filter)
